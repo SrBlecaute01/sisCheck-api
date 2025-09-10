@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # Aplicação Node.js/Express
+  api:
+    build: .
+    container_name: sischeck-api
+    ports:
+      - "3056:3056"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=sischeck
+      - DB_USER=sischeck_user
+      - DB_PASSWORD=sischeck_password
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/app/src:ro
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - sischeck-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: sischeck-postgres
+    environment:
+      - POSTGRES_DB=sischeck
+      - POSTGRES_USER=sischeck_user
+      - POSTGRES_PASSWORD=sischeck_password
+    ports:
+      - "5895:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    networks:
+      - sischeck-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: sischeck-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@sischeck.com
+      - PGADMIN_DEFAULT_PASSWORD=admin123
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    ports:
+      - "8045:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - sischeck-network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  sischeck-network:
+    driver: bridge
