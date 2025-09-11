@@ -3,7 +3,6 @@ const router = express.Router();
 const activityController = require('../controllers/activity-controller');
 const { authMiddleware, adminMiddleware } = require('../middlewares/auth-middleware');
 
-// CRUD de atividades
 router.post('/', authMiddleware, activityController.createActivity);
 router.get('/', authMiddleware, activityController.getAllActivities);
 router.get('/:id', authMiddleware, activityController.getActivityById);

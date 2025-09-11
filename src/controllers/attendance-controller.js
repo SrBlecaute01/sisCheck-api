@@ -1,7 +1,6 @@
 const AttendanceService = require('../services/attendance-service');
 
 const attendanceController = {
-    // POST / - Registrar presença
     registerAttendance: async (req, res) => {
         try {
             const { participantId, activityId } = req.body;
@@ -29,7 +28,6 @@ const attendanceController = {
         }
     },
 
-    // POST /qr - Registrar presença via QR Code
     registerAttendanceByQr: async (req, res) => {
         try {
             const { qrCode, activityId } = req.body;
@@ -41,7 +39,6 @@ const attendanceController = {
                 });
             }
 
-            // O qrCode é o próprio participantId
             const participantId = parseInt(qrCode);
 
             const attendance = await AttendanceService.registerAttendance(participantId, activityId);
@@ -60,7 +57,6 @@ const attendanceController = {
         }
     },
 
-    // GET / - Buscar todas as presenças
     getAllAttendances: async (req, res) => {
         try {
             const attendances = await AttendanceService.getAllAttendances();
@@ -79,7 +75,6 @@ const attendanceController = {
         }
     },
 
-    // GET /participant/:participantId - Buscar presenças por participante
     getAttendanceByParticipant: async (req, res) => {
         try {
             const { participantId } = req.params;
@@ -99,7 +94,6 @@ const attendanceController = {
         }
     },
 
-    // GET /activity/:activityId - Buscar presenças por atividade
     getAttendanceByActivity: async (req, res) => {
         try {
             const { activityId } = req.params;
@@ -119,7 +113,6 @@ const attendanceController = {
         }
     },
 
-    // GET /report/activity/:activityId - Relatório de atividade
     getActivityReport: async (req, res) => {
         try {
             const { activityId } = req.params;
@@ -138,7 +131,6 @@ const attendanceController = {
         }
     },
 
-    // GET /report/participant/:participantId - Relatório de participante
     getParticipantReport: async (req, res) => {
         try {
             const { participantId } = req.params;
@@ -157,7 +149,6 @@ const attendanceController = {
         }
     },
 
-    // DELETE /:participantId/:activityId - Remover presença
     deleteAttendance: async (req, res) => {
         try {
             const { participantId, activityId } = req.params;

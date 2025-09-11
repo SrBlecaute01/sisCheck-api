@@ -3,7 +3,6 @@ const Participant = require('./participant');
 const Activity = require('./activity');
 const Attendance = require('./attendance');
 
-// Relacionamentos entre Participant e Activity através de Attendance
 Participant.belongsToMany(Activity, {
     through: Attendance,
     foreignKey: 'participant_id',
@@ -18,7 +17,6 @@ Activity.belongsToMany(Participant, {
     as: 'participants'
 });
 
-// Relacionamentos diretos com Attendance
 Participant.hasMany(Attendance, {
     foreignKey: 'participant_id',
     as: 'attendances'

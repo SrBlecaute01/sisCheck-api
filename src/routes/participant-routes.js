@@ -12,7 +12,6 @@ router.delete('/:id', authMiddleware, adminMiddleware, participantController.del
 
 router.get('/:id/qrcode', authMiddleware, participantController.generateQrCodeImage);
 
-// Rota pública para leitura de QR Code (para registrar presença)
 router.get('/qr/:qrCode', participantController.getParticipantByQrCode);
 
 

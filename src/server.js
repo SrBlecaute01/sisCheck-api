@@ -8,6 +8,7 @@ require('./models/associations');
 const app = express();
 const PORT = process.env.PORT || 3056;
 
+// O CORS ta assim pq precisei liberar acesso na rede de casa
 app.use(cors({
     origin: [
         'http://localhost:5173',
@@ -40,19 +41,20 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
+// TODO: Depois colocar isso aqui em um arquivo separado talvez ou deixar aqui mesmo
 const startServer = async () => {
     try {
         await sequelize.authenticate();
-        console.log('✅ Conexão com PostgreSQL estabelecida');
+        console.log('Conexão com PostgreSQL estabelecida');
 
         await sequelize.sync({ force: false });
-        console.log('✅ Modelos sincronizados com o banco');
+        console.log('Modelos sincronizados com o banco');
 
         app.listen(PORT, () => {
-            console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+            console.log(`Servidor rodando em http://localhost:${PORT}`);
         });
     } catch (error) {
-        console.error('❌ Erro ao conectar com o banco:', error);
+        console.error('Erro ao conectar com o banco:', error);
         process.exit(1);
     }
 };

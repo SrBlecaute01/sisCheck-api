@@ -48,13 +48,11 @@ const Attendance = sequelize.define('Attendance', {
     ]
 });
 
-// Métodos de instância
 Attendance.prototype.toJSON = function() {
     const values = { ...this.get() };
     return values;
 };
 
-// Métodos estáticos
 Attendance.findByParticipant = function(participantId) {
     return this.findAll({
         where: { participantId, isActive: true },

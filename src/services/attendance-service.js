@@ -3,25 +3,21 @@ const { Attendance, Participant, Activity } = require('../models/associations');
 class AttendanceService {
     static async registerAttendance(participantId, activityId) {
         try {
-            // Verifica se o participante existe
             const participant = await Participant.findByPk(participantId);
             if (!participant || !participant.isActive) {
                 throw new Error('Participante não encontrado ou inativo');
             }
 
-            // Verifica se a atividade existe
             const activity = await Activity.findByPk(activityId);
             if (!activity || !activity.isActive) {
                 throw new Error('Atividade não encontrada ou inativa');
             }
 
-            // Verifica se já existe registro
             const existingAttendance = await Attendance.findByParticipantAndActivity(participantId, activityId);
             if (existingAttendance) {
                 throw new Error('Presença já registrada para esta atividade');
             }
 
-            // Registra a presença
             const attendance = await Attendance.create({
                 participantId,
                 activityId,
@@ -65,7 +61,6 @@ class AttendanceService {
             throw new Error('Registro de presença não encontrado');
         }
 
-        // Soft delete
         await attendance.update({ isActive: false });
         return true;
     }

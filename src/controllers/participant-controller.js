@@ -2,7 +2,6 @@ const ParticipantService = require('../services/participant-service');
 const QRCode = require('qrcode')
 
 const participantController = {
-    // POST / - Criar participante
     createParticipant: async (req, res) => {
         try {
             const { fullName, email } = req.body;
@@ -33,7 +32,6 @@ const participantController = {
         }
     },
 
-    // GET / - Buscar todos os participantes
     getAllParticipants: async (req, res) => {
         try {
             const participants = await ParticipantService.getAllParticipants();
@@ -52,7 +50,6 @@ const participantController = {
         }
     },
 
-    // GET /:id - Buscar participante por ID
     getParticipantById: async (req, res) => {
         try {
             const { id } = req.params;
@@ -78,7 +75,6 @@ const participantController = {
         }
     },
 
-    // PUT /:id - Atualizar participante
     updateParticipant: async (req, res) => {
         try {
             const { id } = req.params;
@@ -100,7 +96,6 @@ const participantController = {
         }
     },
 
-    // DELETE /:id - Deletar participante (soft delete)
     deleteParticipant: async (req, res) => {
         try {
             const { id } = req.params;
@@ -120,7 +115,6 @@ const participantController = {
         }
     },
 
-    // GET /qr/:qrCode - Buscar participante por QR Code (rota pública)
     getParticipantByQrCode: async (req, res) => {
         try {
             const { qrCode } = req.params;

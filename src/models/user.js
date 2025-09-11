@@ -58,7 +58,6 @@ const User = sequelize.define('User', {
     }
 });
 
-// Métodos de instância
 User.prototype.comparePassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 };
@@ -69,7 +68,6 @@ User.prototype.toJSON = function() {
     return values;
 };
 
-// Métodos estáticos
 User.findByEmail = function(email) {
     return this.findOne({
         where: { email }
