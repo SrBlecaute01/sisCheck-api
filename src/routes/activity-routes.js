@@ -9,4 +9,7 @@ router.get('/:id', authMiddleware, activityController.getActivityById);
 router.put('/:id', authMiddleware, activityController.updateActivity);
 router.delete('/:id', authMiddleware, adminMiddleware, activityController.deleteActivity);
 
+router.get('/:id/qrEntryImage', authMiddleware, activityController.generateQrCodeKeyWordEntryImage);
+router.get('/:id/qrExitImage', authMiddleware, activityController.generateQrCodeKeyWordExitImage);
+
 module.exports = router;

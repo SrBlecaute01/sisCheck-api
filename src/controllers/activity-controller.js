@@ -1,4 +1,5 @@
 const ActivityService = require('../services/activity-service');
+const QRCode = require('qrcode')
 
 const activityController = {
     createActivity: async (req, res) => {
@@ -128,6 +129,128 @@ const activityController = {
             res.status(400).json({
                 success: false,
                 error: error.message
+            });
+        }
+    },
+
+    generateQrCodeKeyWordEntryImage: async (req, res) => {
+        try {
+            const { id } = req.params;
+            console.log("ID PARAMS:", id)
+            const activity = await ActivityService.getActivityById(id);
+
+            if (!activity) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Atividade não encontrada'
+                });
+            }
+
+            const qrContent = `${activity.id};${activity.keyword_entry}`
+
+            const qrCodeBuffer = await QRCode.toBuffer(qrContent, {
+                type: 'png',
+                width: 300,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            });
+
+            res.set({
+                'Content-Type': 'image/png',
+                'Content-Length': qrCodeBuffer.length,
+                'Content-Disposition': `inline; filename="qrcode-activity-entry-${id}.png"`
+            });
+
+            res.send(qrCodeBuffer);
+        } catch (error) {
+            console.error('Erro ao gerar QR Code:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
+            });
+        }
+    },
+
+    generateQrCodeKeyWordExitImage: async (req, res) => {
+        try {
+            const { id } = req.params;
+            console.log("ID PARAMS:", id)
+            const activity = await ActivityService.getActivityById(id);
+
+            if (!activity) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Atividade não encontrada'
+                });
+            }
+
+            const qrContent = `${activity.id};${activity.keyword_exit}`
+
+            const qrCodeBuffer = await QRCode.toBuffer(qrContent, {
+                type: 'png',
+                width: 300,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            });
+
+            res.set({
+                'Content-Type': 'image/png',
+                'Content-Length': qrCodeBuffer.length,
+                'Content-Disposition': `inline; filename="qrcode-activity-exit-${id}.png"`
+            });
+
+            res.send(qrCodeBuffer);
+        } catch (error) {
+            console.error('Erro ao gerar QR Code:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
+            });
+        }
+    },
+
+    generateQrCodeBase64: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const userParticipant = await ParticipantService.getParticipantById(id);
+
+            if (!userParticipant) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Participante não encontrado'
+                });
+            }
+
+            const qrCodeDataURL = await QRCode.toDataURL(participant.qrCodeContent, {
+                type: 'image/png',
+                width: 300,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            });
+
+            res.json({
+                success: true,
+                data: {
+                    userId: userParticipant.id,
+                    participantName: userParticipant.fullName,
+                    qrCodeContent: userParticipant.qrCodeContent,
+                    qrCodeImage: qrCodeDataURL
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao gerar QR Code base64:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
             });
         }
     }
