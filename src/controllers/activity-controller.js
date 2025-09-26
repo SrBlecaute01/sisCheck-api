@@ -3,7 +3,14 @@ const ActivityService = require('../services/activity-service');
 const activityController = {
     createActivity: async (req, res) => {
         try {
-            const { activityName, description, startDate, endDate } = req.body;
+            const {
+                activityName,
+                description,
+                startDate,
+                endDate,
+                keyword_entry,
+                keyword_exit
+            } = req.body;
 
             if (!activityName) {
                 return res.status(400).json({
@@ -12,11 +19,20 @@ const activityController = {
                 });
             }
 
+            if (!keyword_entry || !keyword_exit) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Palavra chave de entrada e saída são obrigatórias.'
+                });
+            }
+
             const activity = await ActivityService.createActivity({
                 activityName,
                 description,
                 startDate,
-                endDate
+                endDate,
+                keyword_entry,
+                keyword_exit
             });
 
             res.status(201).json({

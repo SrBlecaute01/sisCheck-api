@@ -35,6 +35,11 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('USER', 'ADMIN'),
         defaultValue: 'USER'
     },
+    qrCodeContent: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
@@ -54,6 +59,9 @@ const User = sequelize.define('User', {
             if (user.changed('password')) {
                 user.password = await bcrypt.hash(user.password, 12);
             }
+        },
+        afterCreate: async (user) => {
+            await user.update({ qrCodeContent: user.id.toString() });
         }
     }
 });
@@ -68,10 +76,15 @@ User.prototype.toJSON = function() {
     return values;
 };
 
+User.findByQrCode = function(qrCodeContent) {
+    return this.findByPk(parseInt(qrCodeContent));
+};
+
 User.findByEmail = function(email) {
     return this.findOne({
         where: { email }
     });
 };
+
 
 module.exports = User;

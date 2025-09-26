@@ -144,16 +144,17 @@ const participantController = {
     generateQrCodeImage: async (req, res) => {
         try {
             const { id } = req.params;
-            const participant = await ParticipantService.getParticipantById(id);
+            console.log("ID PARAMS:", id)
+            const userParticipant = await ParticipantService.getParticipantById(id);
 
-            if (!participant) {
+            if (!userParticipant) {
                 return res.status(404).json({
                     success: false,
                     error: 'Participante não encontrado'
                 });
             }
 
-            const qrCodeBuffer = await QRCode.toBuffer(participant.qrCodeContent, {
+            const qrCodeBuffer = await QRCode.toBuffer(userParticipant.qrCodeContent, {
                 type: 'png',
                 width: 300,
                 margin: 2,
@@ -182,9 +183,9 @@ const participantController = {
     generateQrCodeBase64: async (req, res) => {
         try {
             const { id } = req.params;
-            const participant = await ParticipantService.getParticipantById(id);
+            const userParticipant = await ParticipantService.getParticipantById(id);
 
-            if (!participant) {
+            if (!userParticipant) {
                 return res.status(404).json({
                     success: false,
                     error: 'Participante não encontrado'
@@ -204,9 +205,9 @@ const participantController = {
             res.json({
                 success: true,
                 data: {
-                    participantId: participant.id,
-                    participantName: participant.fullName,
-                    qrCodeContent: participant.qrCodeContent,
+                    userId: userParticipant.id,
+                    participantName: userParticipant.fullName,
+                    qrCodeContent: userParticipant.qrCodeContent,
                     qrCodeImage: qrCodeDataURL
                 }
             });

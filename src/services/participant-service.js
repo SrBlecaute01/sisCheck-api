@@ -1,4 +1,5 @@
 const Participant = require('../models/participant');
+const User = require('../models/user');
 
 class ParticipantService {
     static async createParticipant(participantData) {
@@ -22,11 +23,11 @@ class ParticipantService {
     }
 
     static async getParticipantById(id) {
-        return await Participant.findByPk(id);
+        return await User.findByPk(id);
     }
 
     static async getParticipantByQrCode(qrCodeContent) {
-        return await Participant.findByQrCode(qrCodeContent);
+        return await User.findByQrCode(qrCodeContent)
     }
 
     static async updateParticipant(id, participantData) {

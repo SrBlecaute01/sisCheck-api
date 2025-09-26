@@ -44,7 +44,10 @@ class AuthService {
             throw new Error('Email já cadastrado');
         }
 
-        const user = await User.create(userData);
+        const user = await User.create({
+            ...userData,
+             qrCodeContent: 'temp'
+        });
 
         const token = this.generateToken({
             id: user.id,

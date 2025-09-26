@@ -7,12 +7,12 @@ router.post('/', authMiddleware, attendanceController.registerAttendance);
 router.post('/qr', attendanceController.registerAttendanceByQr); // Rota pública para QR
 
 router.get('/', authMiddleware, attendanceController.getAllAttendances);
-router.get('/participant/:participantId', authMiddleware, attendanceController.getAttendanceByParticipant);
+router.get('/participant/:userId', authMiddleware, attendanceController.getAttendanceByParticipant);
 router.get('/activity/:activityId', authMiddleware, attendanceController.getAttendanceByActivity);
 
 router.get('/report/activity/:activityId', authMiddleware, attendanceController.getActivityReport);
-router.get('/report/participant/:participantId', authMiddleware, attendanceController.getParticipantReport);
+router.get('/report/participant/:userId', authMiddleware, attendanceController.getParticipantReport);
 
-router.delete('/:participantId/:activityId', authMiddleware, adminMiddleware, attendanceController.deleteAttendance);
+router.delete('/:userId/:activityId', authMiddleware, adminMiddleware, attendanceController.deleteAttendance);
 
 module.exports = router;

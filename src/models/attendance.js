@@ -7,12 +7,12 @@ const Attendance = sequelize.define('Attendance', {
         autoIncrement: true,
         primaryKey: true
     },
-    participantId: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: 'participant_id',
+        field: 'user_id',
         references: {
-            model: 'participants',
+            model: 'users',
             key: 'id'
         }
     },
@@ -31,6 +31,16 @@ const Attendance = sequelize.define('Attendance', {
         defaultValue: DataTypes.NOW,
         field: 'registered_at'
     },
+    entryTime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'entry_time'
+    },
+    exitTime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'exit_time'
+    },
     isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
@@ -43,7 +53,7 @@ const Attendance = sequelize.define('Attendance', {
     indexes: [
         {
             unique: true,
-            fields: ['participant_id', 'activity_id']
+            fields: ['user_id', 'activity_id']
         }
     ]
 });
@@ -53,9 +63,9 @@ Attendance.prototype.toJSON = function() {
     return values;
 };
 
-Attendance.findByParticipant = function(participantId) {
+Attendance.findByParticipant = function(userId) {
     return this.findAll({
-        where: { participantId, isActive: true },
+        where: { userId, isActive: true },
         order: [['registered_at', 'DESC']]
     });
 };
@@ -67,9 +77,9 @@ Attendance.findByActivity = function(activityId) {
     });
 };
 
-Attendance.findByParticipantAndActivity = function(participantId, activityId) {
+Attendance.findByParticipantAndActivity = function(userId, activityId) {
     return this.findOne({
-        where: { participantId, activityId }
+        where: { userId, activityId }
     });
 };
 

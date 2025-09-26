@@ -1,9 +1,10 @@
-const { Attendance, Participant, Activity } = require('../models/associations');
+const { Attendance, Participant, Activity, User } = require('../models/associations');
+const ActivityService = require('./activity-service')
 
 class AttendanceService {
-    static async registerAttendance(participantId, activityId) {
+    static async registerAttendance(userId, activityId, keyword) {
         try {
-            const participant = await Participant.findByPk(participantId);
+            const participant = await User.findByPk(userId);
             if (!participant || !participant.isActive) {
                 throw new Error('Participante não encontrado ou inativo');
             }
@@ -13,16 +14,36 @@ class AttendanceService {
                 throw new Error('Atividade não encontrada ou inativa');
             }
 
-            const existingAttendance = await Attendance.findByParticipantAndActivity(participantId, activityId);
-            if (existingAttendance) {
-                throw new Error('Presença já registrada para esta atividade');
-            }
+            const keyType = await ActivityService.validateActivityKeyword(activityId, keyword);
+            let attendance;
 
-            const attendance = await Attendance.create({
-                participantId,
-                activityId,
-                registeredAt: new Date()
-            });
+            if (keyType === 'ENTRADA') {
+                attendance = await Attendance.findOne({ where: { userId, activityId, isActive: true } });
+                if (attendance && attendance.entryTime) {
+                    throw new Error('Entrada já registrada para este usuário nesta atividade');
+                }
+
+                if (attendance) {
+                    await attendance.update({ entryTime: new Date() });
+                } else {
+                    attendance = await Attendance.create({
+                        userId,
+                        activityId,
+                        entryTime: new Date()
+                    });
+                }
+            } else if (keyType === 'SAIDA') {
+                attendance = await Attendance.findOne({ where: { userId, activityId, isActive: true } });
+                if (!attendance || !attendance.entryTime) {
+                    throw new Error('Não é possível registrar saída sem entrada');
+                }
+                if (attendance.exitTime) {
+                    throw new Error('Saída já registrada para este usuário nesta atividade');
+                }
+                await attendance.update({ exitTime: new Date() });
+            } else {
+                throw new Error('Palavra-chave não encontrada na atividade.');
+            }
 
             return await Attendance.findByPk(attendance.id, {
                 include: [
@@ -35,8 +56,8 @@ class AttendanceService {
         }
     }
 
-    static async getAttendanceByParticipant(participantId) {
-        return await Attendance.findByParticipant(participantId);
+    static async getAttendanceByParticipant(userId) {
+        return await Attendance.findByParticipant(userId);
     }
 
     static async getAttendanceByActivity(activityId) {
@@ -54,8 +75,8 @@ class AttendanceService {
         });
     }
 
-    static async deleteAttendance(participantId, activityId) {
-        const attendance = await Attendance.findByParticipantAndActivity(participantId, activityId);
+    static async deleteAttendance(userId, activityId) {
+        const attendance = await Attendance.findByParticipantAndActivity(userId, activityId);
 
         if (!attendance) {
             throw new Error('Registro de presença não encontrado');
@@ -78,7 +99,7 @@ class AttendanceService {
             activityId,
             totalAttendances: attendances.length,
             attendances: attendances.map(att => ({
-                participantId: att.participantId,
+                userId: att.userId,
                 participantName: att.participant.fullName,
                 participantEmail: att.participant.email,
                 registeredAt: att.registeredAt
@@ -86,9 +107,9 @@ class AttendanceService {
         };
     }
 
-    static async getParticipantReport(participantId) {
+    static async getParticipantReport(userId) {
         const attendances = await Attendance.findAll({
-            where: { participantId, isActive: true },
+            where: { userId, isActive: true },
             include: [
                 { model: Activity, as: 'activity' }
             ],
@@ -96,7 +117,7 @@ class AttendanceService {
         });
 
         return {
-            participantId,
+            userId,
             totalActivities: attendances.length,
             attendances: attendances.map(att => ({
                 activityId: att.activityId,

@@ -59,8 +59,8 @@ Participant.findByQrCode = function(qrCodeContent) {
     return this.findByPk(parseInt(qrCodeContent));
 };
 
-Participant.generateQrCodeContent = function(participantId) {
-    return `PARTICIPANT_${participantId}`;
+Participant.generateQrCodeContent = function(userId) {
+    return `PARTICIPANT_${userId}`;
 };
 
 module.exports = Participant;

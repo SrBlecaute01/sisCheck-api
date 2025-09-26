@@ -3,16 +3,16 @@ const AttendanceService = require('../services/attendance-service');
 const attendanceController = {
     registerAttendance: async (req, res) => {
         try {
-            const { participantId, activityId } = req.body;
+            const { userId, activityId, keyword } = req.body;
 
-            if (!participantId || !activityId) {
+            if (!userId || !activityId) {
                 return res.status(400).json({
                     success: false,
                     error: 'ID do participante e ID da atividade são obrigatórios'
                 });
             }
 
-            const attendance = await AttendanceService.registerAttendance(participantId, activityId);
+            const attendance = await AttendanceService.registerAttendance(userId, activityId, keyword);
 
             res.status(201).json({
                 success: true,
@@ -30,7 +30,7 @@ const attendanceController = {
 
     registerAttendanceByQr: async (req, res) => {
         try {
-            const { qrCode, activityId } = req.body;
+            const { qrCode, activityId, keyword } = req.body;
 
             if (!qrCode || !activityId) {
                 return res.status(400).json({
@@ -39,9 +39,9 @@ const attendanceController = {
                 });
             }
 
-            const participantId = parseInt(qrCode);
+            const userId = parseInt(qrCode);
 
-            const attendance = await AttendanceService.registerAttendance(participantId, activityId);
+            const attendance = await AttendanceService.registerAttendance(userId, activityId, keyword);
 
             res.status(201).json({
                 success: true,
@@ -77,8 +77,8 @@ const attendanceController = {
 
     getAttendanceByParticipant: async (req, res) => {
         try {
-            const { participantId } = req.params;
-            const attendances = await AttendanceService.getAttendanceByParticipant(participantId);
+            const { userId } = req.params;
+            const attendances = await AttendanceService.getAttendanceByParticipant(userId);
 
             res.json({
                 success: true,
@@ -133,8 +133,8 @@ const attendanceController = {
 
     getParticipantReport: async (req, res) => {
         try {
-            const { participantId } = req.params;
-            const report = await AttendanceService.getParticipantReport(participantId);
+            const { userId } = req.params;
+            const report = await AttendanceService.getParticipantReport(userId);
 
             res.json({
                 success: true,
@@ -151,9 +151,9 @@ const attendanceController = {
 
     deleteAttendance: async (req, res) => {
         try {
-            const { participantId, activityId } = req.params;
+            const { userId, activityId } = req.params;
 
-            await AttendanceService.deleteAttendance(participantId, activityId);
+            await AttendanceService.deleteAttendance(userId, activityId);
 
             res.json({
                 success: true,

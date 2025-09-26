@@ -53,6 +53,22 @@ class ActivityService {
 
         return deletedRowsCount > 0;
     }
+
+    static async validateActivityKeyword(activityId, keyword) {
+        const activity = await Activity.findByPk(activityId);
+        if (!activity) {
+            throw new Error('Atividade não encontrada');
+        }
+
+        const palavra = keyword.trim().toUpperCase();
+        if (palavra === activity.keyword_entry.trim().toUpperCase()) {
+            return 'ENTRADA';
+        }
+        if (palavra === activity.keyword_exit.trim().toUpperCase()) {
+            return 'SAIDA';
+        }
+        return false;
+    }
 }
 
 module.exports = ActivityService;

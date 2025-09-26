@@ -19,6 +19,14 @@ const Activity = sequelize.define('Activity', {
         type: DataTypes.TEXT,
         allowNull: true
     },
+    keyword_entry: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    keyword_exit: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     startDate: {
         type: DataTypes.DATE,
         allowNull: true
@@ -35,21 +43,31 @@ const Activity = sequelize.define('Activity', {
     tableName: 'activities',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    updatedAt: 'updated_at',
+    hooks: {
+        beforeCreate: (activity) => {
+            if (activity.keyword_entry) activity.keyword_entry = activity.keyword_entry.toUpperCase();
+            if (activity.keyword_exit) activity.keyword_exit = activity.keyword_exit.toUpperCase();
+        },
+        beforeUpdate: (activity) => {
+            if (activity.keyword_entry) activity.keyword_entry = activity.keyword_entry.toUpperCase();
+            if (activity.keyword_exit) activity.keyword_exit = activity.keyword_exit.toUpperCase();
+        }
+    }
 });
 
-Activity.prototype.toJSON = function() {
+Activity.prototype.toJSON = function () {
     const values = { ...this.get() };
     return values;
 };
 
-Activity.findByName = function(activityName) {
+Activity.findByName = function (activityName) {
     return this.findOne({
         where: { activityName }
     });
 };
 
-Activity.findActiveActivities = function() {
+Activity.findActiveActivities = function () {
     return this.findAll({
         where: { isActive: true },
         order: [['created_at', 'DESC']]
