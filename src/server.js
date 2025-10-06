@@ -15,7 +15,7 @@ app.use(cors({
         'http://192.168.1.110:5173',
         'http://localhost:3000',
         'http://192.168.1.100:3000',
-        'https://sisweek-api.arnaldo.dev'
+        'https://sisweek.arnaldo.dev/'
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
