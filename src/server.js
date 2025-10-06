@@ -10,13 +10,7 @@ const PORT = process.env.PORT || 3056;
 
 // O CORS ta assim pq precisei liberar acesso na rede de casa
 app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'http://192.168.1.110:5173',
-        'http://localhost:3000',
-        'http://192.168.1.100:3000',
-        'https://sisweek.arnaldo.dev/'
-    ],
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
