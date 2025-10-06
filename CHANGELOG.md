@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.1.0...v1.1.1) (2025-10-06)
+
+
+### Bug Fixes
+
+* add missing database name in enviroment variables ([af735c1](https://github.com/SrBlecaute01/sisCheck-api/commit/af735c1fa7949b9198d7e235b506c62a935251d5))
+* add missing database name in enviroment variables ([4b17cc5](https://github.com/SrBlecaute01/sisCheck-api/commit/4b17cc5d957e758b3ce78ac41f536feae22916c9))
+
 ## [1.1.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.2...v1.1.0) (2025-10-06)
 
 
