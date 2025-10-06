@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.2...v1.1.0) (2025-10-06)
+
+
+### Features
+
+* adiciona uma verificação no registro de uma atividade impedindo que seja criada caso já exista alguma que tenha tanto palavra chave de entrada ou saida já registrada ([47a6e21](https://github.com/SrBlecaute01/sisCheck-api/commit/47a6e21f9b6b75b319a6b1e674a7ace7349ea338))
+
+
+### Bug Fixes
+
+* add quotes to docker run command ([b72e989](https://github.com/SrBlecaute01/sisCheck-api/commit/b72e9892299621e68a70040e2aa013b4b9288bb7))
+
 ## [1.0.2](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.1...v1.0.2) (2025-10-06)
 
 
