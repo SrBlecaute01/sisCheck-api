@@ -72,7 +72,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script:
+          script: |
             NETWORK_NAME="${{ vars.DOCKER_NETWORK_NAME }}"
             SERVICE_NAME="${{ vars.DOCKER_SERVICE_NAME }}"
             
