@@ -86,20 +86,30 @@ jobs:
             docker stop ${SERVICE_NAME} || true
             docker rm ${SERVICE_NAME} || true
             
+            SERVER_PORT="${{ vars.SERVER_PORT }}"
+            SERVER_MODE="${{ vars.SERVER_MODE }}"
+            DB_HOST="${{ secrets.DB_HOST }}"
+            DB_PORT="${{ secrets.DB_PORT }}"
+            DB_USER="${{ secrets.DB_USER }}"
+            DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+            JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
+            ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}"
+            
             echo "Running new container ${SERVICE_NAME}..."
             docker run -d \
             --name ${SERVICE_NAME} \
             --restart unless-stopped \
             --network ${NETWORK_NAME} \
-            -e PORT="${{ vars.SERVER_PORT }}" \
-            -e NODE_ENV="${{ vars.SERVER_NODE }}" \
-            -e DB_HOST="${{ secrets.DB_HOST }}" \
-            -e DB_PORT="${{ secrets.DB_PORT }}" \
-            -e DB_USER="${{ secrets.DB_USER }}" \
-            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
-            -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-            -e ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}" \
-            -e ADMIN_PASSWORD="${{ secrets.ADMIN_PASSWORD }}" \
+            -e PORT=${SERVER_PORT} \
+            -e NODE_ENV=${SERVER_MODE} \
+            -e DB_HOST=${DB_HOST} \
+            -e DB_PORT=${DB_PORT} \
+            -e DB_USER=${DB_USER} \
+            -e DB_PASSWORD=${DB_PASSWORD} \
+            -e JWT_SECRET=${JWT_SECRET} \
+            -e ADMIN_EMAIL=${ADMIN_EMAIL} \
+            -e ADMIN_PASSWORD=${ADMIN_PASSWORD} \
             ${IMAGE_NAME}
             
             echo "Cleaning up unused Docker images..."
