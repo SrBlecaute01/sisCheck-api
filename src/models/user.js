@@ -91,5 +91,11 @@ User.findByEmail = function(email) {
     });
 };
 
+User.findByCpf = function(cpf) {
+    return this.findOne({
+        where: { cpf }
+    });
+};
+
 
 module.exports = User;

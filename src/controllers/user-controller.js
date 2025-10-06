@@ -5,16 +5,16 @@ const userController = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
+            const { cpf, password } = req.body;
 
-            if (!email || !password) {
+            if (!cpf || !password) {
                 return res.status(400).json({
                     success: false,
-                    error: 'Email e senha são obrigatórios'
+                    error: 'CPF e senha são obrigatórios'
                 });
             }
 
-            const result = await AuthService.login(email, password);
+            const result = await AuthService.login(cpf, password);
 
             res.json({
                 success: true,

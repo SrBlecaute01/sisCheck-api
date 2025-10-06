@@ -12,8 +12,10 @@ class AuthService {
         return jwt.verify(token, process.env.JWT_SECRET);
     }
 
-    static async login(email, password) {
-        const user = await User.findByEmail(email);
+    static async login(cpf, password) {
+        const cleanCpf = cpf.replace(/[.\-]/g, '');
+
+        const user = await User.findOne({ where: { cpf: cleanCpf } });
 
         if (!user || !user.isActive) {
             throw new Error('Credenciais inválidas');
@@ -38,15 +40,18 @@ class AuthService {
     }
 
     static async register(userData) {
-        const existingUser = await User.findByEmail(userData.email);
+        const cleanCpf = userData.cpf.replace(/[.\-]/g, '');
+
+        const existingUser = await User.findOne({ where: { cpf: cleanCpf } });
 
         if (existingUser) {
-            throw new Error('Email já cadastrado');
+            throw new Error('CPF já cadastrado');
         }
 
         const user = await User.create({
             ...userData,
-             qrCodeContent: 'temp'
+            cpf: cleanCpf,
+            qrCodeContent: 'temp'
         });
 
         const token = this.generateToken({
