@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.1...v1.0.2) (2025-10-06)
+
+
+### Bug Fixes
+
+* deploy script commands ([3e6475e](https://github.com/SrBlecaute01/sisCheck-api/commit/3e6475e321769a268b6cd7cd65fe8de2826e7595))
+
 ## [1.0.1](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.0...v1.0.1) (2025-10-06)
 
 
