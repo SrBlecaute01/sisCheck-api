@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.0.0...v1.0.1) (2025-10-06)
+
+
+### Bug Fixes
+
+* docker enviroment variables ([d9c6247](https://github.com/SrBlecaute01/sisCheck-api/commit/d9c624709816fa888248ba744c025eb0452d1435))
+
 ## 1.0.0 (2025-10-06)
 
 
