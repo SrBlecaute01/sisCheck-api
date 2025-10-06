@@ -1,8 +1,22 @@
+const { Op } = require('sequelize');
 const Activity = require('../models/activity');
 
 class ActivityService {
     static async createActivity(activityData) {
         try {
+            const existing = await Activity.findOne({
+                where: {
+                    [Op.or]: [
+                        { keyword_entry: activityData.keyword_entry },
+                        { keyword_exit: activityData.keyword_exit }
+                    ]
+                }
+            });
+
+            if (existing) {
+                throw new Error('Já existe uma atividade com essa palavra-chave de entrada ou saída.');
+            }
+
             const activity = await Activity.create(activityData);
             return activity;
         } catch (error) {
