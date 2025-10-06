@@ -6,6 +6,7 @@ ENV NODE_ENV=production
 
 ENV DB_HOST=""
 ENV DB_PORT=""
+ENV DB_NAME=""
 ENV DB_USER=""
 ENV DB_PASSWORD=""
 
