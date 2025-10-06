@@ -32,16 +32,16 @@ const userController = {
 
     register: async (req, res) => {
         try {
-            const { name, email, password } = req.body;
+            const { name, cpf, email, password } = req.body;
 
-            if (!name || !email || !password) {
+            if (!name || !email || !password || !cpf) {
                 return res.status(400).json({
                     success: false,
-                    error: 'Nome, email e senha são obrigatórios'
+                    error: 'Nome, cpf, email e senha são obrigatórios'
                 });
             }
 
-            const result = await AuthService.register({ name, email, password });
+            const result = await AuthService.register({ name, email, password, cpf });
 
             res.status(201).json({
                 success: true,
