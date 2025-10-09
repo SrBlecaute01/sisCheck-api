@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.1.2...v1.2.0) (2025-10-09)
+
+
+### Features
+
+* adiciona rota de do deploy no cors ([8f60d21](https://github.com/SrBlecaute01/sisCheck-api/commit/8f60d21bec2f4b1c16c5205ebc71eb0adf86a1d8))
+
 ## [1.1.2](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.1.1...v1.1.2) (2025-10-06)
 
 
