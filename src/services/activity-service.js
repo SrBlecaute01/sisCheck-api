@@ -25,7 +25,7 @@ class ActivityService {
     }
 
     static async getAllActivities() {
-        return await Activity.findAll();
+        return await Activity.findActiveByOrder();
     }
 
     static async getActivityById(id) {

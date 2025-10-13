@@ -74,4 +74,10 @@ Activity.findActiveActivities = function () {
     });
 };
 
+Activity.findActiveByOrder = function () {
+    return this.findAll({
+        order: [['startDate', 'ASC']]
+    });
+};
+
 module.exports = Activity;
