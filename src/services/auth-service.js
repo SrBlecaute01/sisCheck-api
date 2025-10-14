@@ -42,10 +42,16 @@ class AuthService {
     static async register(userData) {
         const cleanCpf = userData.cpf.replace(/[.\-]/g, '');
 
-        const existingUser = await User.findOne({ where: { cpf: cleanCpf } });
+        const existingUserByCpf = await User.findOne({ where: { cpf: cleanCpf } });
 
-        if (existingUser) {
+        if (existingUserByCpf) {
             throw new Error('CPF já cadastrado');
+        }
+
+        const existingUserByEmail = await User.findOne({ where: { email: userData.email } });
+
+        if (existingUserByEmail) {
+            throw new Error('Email já cadastrado');
         }
 
         const user = await User.create({
