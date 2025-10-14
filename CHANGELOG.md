@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.2.0...v1.3.0) (2025-10-14)
+
+
+### Features
+
+* adiciona tratamento de validação para email já existente na base de dados quando tenta registrar um novo user ([889d943](https://github.com/SrBlecaute01/sisCheck-api/commit/889d943e725729f389e218ff27d3bec1e518d51c))
+* ajusta a listagem da atividades para ser de forma ascendente com base na data de inicio ([d6f835b](https://github.com/SrBlecaute01/sisCheck-api/commit/d6f835ba48f0d6204af9f3b8d7007c48ece589d7))
+
 ## [1.2.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.1.2...v1.2.0) (2025-10-09)
 
 
