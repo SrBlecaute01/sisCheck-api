@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.3.0...v1.4.0) (2025-10-23)
+
+
+### Features
+
+* implementa rota para deletar de forma fisica uma atividade do banco de dados ([f3261c8](https://github.com/SrBlecaute01/sisCheck-api/commit/f3261c8f1bd606b6a62649d34db039376b683059))
+* implementa um novo service para buscar atividades que o usuário da sessão está participando ([c57e227](https://github.com/SrBlecaute01/sisCheck-api/commit/c57e227dd856f440958ddee3d2574722c58ec6fc))
+
 ## [1.3.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.2.0...v1.3.0) (2025-10-14)
 
 
