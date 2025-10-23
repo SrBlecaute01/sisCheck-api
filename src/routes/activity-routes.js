@@ -6,6 +6,7 @@ const { authMiddleware, adminMiddleware } = require('../middlewares/auth-middlew
 router.post('/', authMiddleware, activityController.createActivity);
 router.get('/', authMiddleware, activityController.getAllActivities);
 router.get('/:id', authMiddleware, activityController.getActivityById);
+router.get('/:id/myActivities', authMiddleware, activityController.getAllActivityByUser)
 router.put('/:id', authMiddleware, activityController.updateActivity);
 router.delete('/:id', authMiddleware, adminMiddleware, activityController.deleteActivity);
 

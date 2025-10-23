@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const Activity = require('../models/activity');
+const Attendance = require('../models/attendance')
 
 class ActivityService {
     static async createActivity(activityData) {
@@ -30,6 +31,10 @@ class ActivityService {
 
     static async getActivityById(id) {
         return await Activity.findByPk(id);
+    }
+
+    static async getActivityByUser(userId) {
+        return await Attendance.findByParticipant(userId);
     }
 
     static async getActivityByName(activityName) {

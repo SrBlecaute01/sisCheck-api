@@ -93,6 +93,31 @@ const activityController = {
         }
     },
 
+    getAllActivityByUser: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const activities = await ActivityService.getActivityByUser(id);
+
+            if (!activities) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Atividade não encontrada'
+                });
+            }
+
+            res.json({
+                success: true,
+                data: activities
+            });
+        } catch (error) {
+            console.error('Erro ao buscar atividades:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
+            });
+        }
+    },
+
     updateActivity: async (req, res) => {
         try {
             const { id } = req.params;
