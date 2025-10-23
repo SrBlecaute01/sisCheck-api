@@ -158,6 +158,25 @@ const activityController = {
         }
     },
 
+    deletePermanentlyActivity: async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            await ActivityService.hardDeleteActivity(id);
+
+            res.json({
+                success: true,
+                message: 'Atividade deletada com sucesso'
+            });
+        } catch (error) {
+            console.error('Erro ao deletar atividade:', error);
+            res.status(400).json({
+                success: false,
+                error: error.message
+            });
+        }
+    },
+
     generateQrCodeKeyWordEntryImage: async (req, res) => {
         try {
             const { id } = req.params;
