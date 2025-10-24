@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.4.0...v1.5.0) (2025-10-24)
+
+
+### Features
+
+* rota exposta para puxar users ([d998e5e](https://github.com/SrBlecaute01/sisCheck-api/commit/d998e5e87604607d33d724032bab371119740742))
+
 ## [1.4.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.3.0...v1.4.0) (2025-10-23)
 
 
