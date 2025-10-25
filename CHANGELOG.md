@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.5.0...v1.6.0) (2025-10-25)
+
+
+### Features
+
+* adiciona os atributes que devem ser retornados na rota de getAllUsers ([e61c3fa](https://github.com/SrBlecaute01/sisCheck-api/commit/e61c3fa607191f30462887b6aef781b39b33bf3d))
+
 ## [1.5.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.4.0...v1.5.0) (2025-10-24)
 
 
