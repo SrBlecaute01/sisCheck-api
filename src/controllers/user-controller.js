@@ -67,6 +67,7 @@ const userController = {
     getAllUsers: async (req, res) => {
         try {
             const users = await User.findAll({
+                attributes: ['id', 'name', 'email', 'created_at'],
                 order: [['created_at', 'DESC']]
             });
 
