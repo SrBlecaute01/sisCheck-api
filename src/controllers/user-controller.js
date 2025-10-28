@@ -142,6 +142,38 @@ const userController = {
         }
     },
 
+    deactivateUser: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { isActive } = req.body;
+
+            const [updatedRowsCount] = await User.update({ isActive }, {
+                where: { id }
+            });
+
+            if (updatedRowsCount === 0) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Usuário não encontrado'
+                });
+            }
+
+            const updatedUser = await User.findByPk(id);
+
+            res.json({
+                success: true,
+                data: updatedUser.toJSON(),
+                message: 'Usuário desativado com sucesso!'
+            });
+        } catch (error) {
+            console.error('Erro ao desativar usuário:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
+            });
+        }
+    },
+
     deleteUser: async (req, res) => {
         try {
             const { id } = req.params;
