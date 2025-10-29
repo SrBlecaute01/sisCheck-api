@@ -7,6 +7,7 @@ router.post('/login', authController.login);
 router.post('/register', authController.register);
 router.get('/getUsers', authMiddleware, authController.getAllUsers)
 router.put('/:id/deactivate-user', authMiddleware, authController.deactivateUser)
+router.put('/:id/change-password', authMiddleware, authController.changePassword)
 
 router.get('/me', authMiddleware, authController.me);
 

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const AuthService = require('../services/auth-service')
+const bcrypt = require('bcryptjs');
 
 const userController = {
 
@@ -200,7 +201,59 @@ const userController = {
                 error: 'Erro interno do servidor'
             });
         }
-    }
+    },
+
+    changePassword: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { newPassword, confirmPassword } = req.body;
+
+            if (!newPassword || !confirmPassword) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Nova senha e confirmação são obrigatórias'
+                });
+            }
+
+            if (newPassword !== confirmPassword) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Nova senha e confirmação não conferem'
+                });
+            }
+
+            if (newPassword.length < 6) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Nova senha deve ter no mínimo 6 caracteres'
+                });
+            }
+
+            const passwordHash = await bcrypt.hash(confirmPassword, 12)
+
+            const [updatedRowsCount] = await User.update({ password: passwordHash }, {
+                where: { id }
+            });
+
+            if (updatedRowsCount === 0) {
+                return res.status(404).json({
+                    success: false,
+                    error: 'Usuário não encontrado'
+                });
+            }
+
+            res.json({
+                success: true,
+                message: 'Senha alterada com sucesso'
+            });
+        } catch (error) {
+            console.error('Erro ao alterar senha:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Erro interno do servidor'
+            });
+        }
+    },
 };
 
 module.exports = userController;
