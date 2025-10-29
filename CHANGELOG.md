@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.6.0...v1.7.0) (2025-10-29)
+
+
+### Features
+
+* implementa rota para alterar senha do usuário ([372cf6e](https://github.com/SrBlecaute01/sisCheck-api/commit/372cf6e293ebec54b51b4962bd7f9f665b87e398))
+* insere rota para desativar um usuario da aplicação ([8003810](https://github.com/SrBlecaute01/sisCheck-api/commit/8003810985b410ff8b26c3f16aeaf8faebab88b7))
+
 ## [1.6.0](https://github.com/SrBlecaute01/sisCheck-api/compare/v1.5.0...v1.6.0) (2025-10-25)
 
 
